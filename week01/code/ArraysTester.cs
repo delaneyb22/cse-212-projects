@@ -33,14 +33,23 @@ public static class ArraysTester {
     /// </summary>
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     private static double[] MultiplesOf(double number, int length)
-    {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+{
+    // Create a new array of doubles with the length specified by the `length` parameter.
+    double[] multiples = new double[length];
 
-        return new double[0]; // replace this return statement with your own
+    // Initialize a counter variable to 0.
+    int counter = 0;
+
+    // Loop through the array and for each index, set the value to the starting number multiplied by the current value of the counter.
+    for (int i = 0; i < length; i++)
+    {
+        multiples[i] = number * counter;
+        counter++;
     }
+
+    // Return the array.
+    return multiples;
+}
     
     /// <summary>
     /// Rotate the 'data' to the right by the 'amount'.  For example, if the data is 
@@ -52,10 +61,28 @@ public static class ArraysTester {
     /// </summary>
     private static void RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+       // Check if the `amount` parameter is within the valid range (1 to `data.Count`).
+    if (amount < 1 || amount > data.Count)
+    {
+        throw new ArgumentOutOfRangeException(nameof(amount), "The amount must be between 1 and the length of the data.");
+    }
 
+    // Create a new list with the same size as `data`.
+    List<int> rotatedData = new List<int>(data.Count);
+
+    // Copy the last `amount` elements of `data` to the beginning of the new list.
+    for (int i = data.Count - amount; i < data.Count; i++)
+    {
+        rotatedData.Add(data[i]);
+    }
+
+    // Copy the remaining elements of `data` to the end of the new list.
+    for (int i = 0; i < data.Count - amount; i++)
+    {
+        rotatedData.Add(data[i]);
+    }
+
+    // Replace `data` with the new list.
+    data = rotatedData;
     }
 }
