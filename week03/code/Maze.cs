@@ -15,48 +15,41 @@
 /// then the 'currX' and 'currY' values should be changed.
 /// </summary>
 public class Maze {
-    private readonly Dictionary<ValueTuple<int, int>, bool[]> _mazeMap;
-    private int _currX = 1;
-    private int _currY = 1;
+    private readonly Dictionary<ValueTuple<int, int>, bool[]> _map;
+    private int _x;
+    private int _y;
 
-    public Maze(Dictionary<ValueTuple<int, int>, bool[]> mazeMap) {
-        _mazeMap = mazeMap;
+    public Maze(Dictionary<ValueTuple<int, int>, bool[]> map) {
+        _map = map;
+        _x = 1;
+        _y = 1;
     }
 
-    // Todo Maze Problem - ADD YOUR CODE HERE
-    /// <summary>
-    /// Check to see if you can move left.  If you can, then move.  If you
-    /// can't move, then display "Can't go that way!"
-    /// </summary>
-    public void MoveLeft() {
-        // FILL IN CODE
-    }
-
-    /// <summary>
-    /// Check to see if you can move right.  If you can, then move.  If you
-    /// can't move, then display "Can't go that way!"
-    /// </summary>
-    public void MoveRight() {
-        // FILL IN CODE
-    }
-
-    /// <summary>
-    /// Check to see if you can move up.  If you can, then move.  If you
-    /// can't move, then display "Can't go that way!"
-    /// </summary>
     public void MoveUp() {
-        // FILL IN CODE
+        if (_map.TryGetValue((_x, _y - 1), out bool[] directions) && directions[0]) {
+            _y--;
+        }
     }
 
-    /// <summary>
-    /// Check to see if you can move down.  If you can, then move.  If you
-    /// can't move, then display "Can't go that way!"
-    /// </summary>
     public void MoveDown() {
-        // FILL IN CODE
+        if (_map.TryGetValue((_x, _y + 1), out bool[] directions) && directions[2]) {
+            _y++;
+        }
+    }
+
+    public void MoveLeft() {
+        if (_map.TryGetValue((_x - 1, _y), out bool[] directions) && directions[3]) {
+            _x--;
+        }
+    }
+
+    public void MoveRight() {
+        if (_map.TryGetValue((_x + 1, _y), out bool[] directions) && directions[1]) {
+            _x++;
+        }
     }
 
     public void ShowStatus() {
-        Console.WriteLine($"Current location (x={_currX}, y={_currY})");
+        Console.WriteLine($"({_x}, {_y})");
     }
 }

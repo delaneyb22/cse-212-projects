@@ -108,10 +108,20 @@ public static class SetsAndMapsTester {
     /// </summary>
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     private static void DisplayPairs(string[] words) {
-        // To display the pair correctly use something like:
-        // Console.WriteLine($"{word} & {pair}");
-        // Each pair of words should displayed on its own line.
+    HashSet<string> set = new HashSet<string>();
+    foreach (var word in words) {
+        string reversed = Reverse(word);
+        if (set.Contains(reversed)) {
+            Console.WriteLine($"{word} & {reversed}");
+        }
+        set.Add(word);
     }
+}
+private static string Reverse(string word) {
+    char[] arr = word.ToCharArray();
+    Array.Reverse(arr);
+    return new string(arr);
+}
 
     /// <summary>
     /// Read a census file and summarize the degrees (education)
@@ -128,14 +138,18 @@ public static class SetsAndMapsTester {
     /// # Problem 2 #
     /// #############
     private static Dictionary<string, int> SummarizeDegrees(string filename) {
-        var degrees = new Dictionary<string, int>();
-        foreach (var line in File.ReadLines(filename)) {
-            var fields = line.Split(",");
-            // Todo Problem 2 - ADD YOUR CODE HERE
+    var degrees = new Dictionary<string, int>();
+    foreach (var line in File.ReadLines(filename)) {
+        var fields = line.Split(",");
+        string degree = fields[3];
+        if (!degrees.ContainsKey(degree)) {
+            degrees[degree] = 1;
+        } else {
+            degrees[degree]++;
         }
-
-        return degrees;
     }
+    return degrees;
+}
 
     /// <summary>
     /// Determine if 'word1' and 'word2' are anagrams.  An anagram
@@ -156,10 +170,26 @@ public static class SetsAndMapsTester {
     /// #############
     /// # Problem 3 #
     /// #############
-    private static bool IsAnagram(string word1, string word2) {
-        // Todo Problem 3 - ADD YOUR CODE HERE
+   private static bool IsAnagram(string word1, string word2) {
+    if (word1.Length != word2.Length) {
         return false;
     }
+    Dictionary<char, int> dict = new Dictionary<char, int>();
+    foreach (var c in word1) {
+        if (!dict.ContainsKey(c)) {
+            dict[c] = 1;
+        } else {
+            dict[c]++;
+        }
+    }
+    foreach (var c in word2) {
+        if (!dict.ContainsKey(c) || dict[c] == 0) {
+            return false;
+        }
+        dict[c]--;
+    }
+    return true;
+}
 
     /// <summary>
     /// Sets up the maze dictionary for problem 4
